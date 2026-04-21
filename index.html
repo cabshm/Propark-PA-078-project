@@ -158,6 +158,10 @@
           </div>
           <div class="contact-box" contenteditable="true"><strong>Contact</strong><br>State BRC, Brian Goretzki<br>602-390-8771</div>
         </div>
+        <div class="control-row" style="padding:0 22px 12px;">
+          <button class="filter-btn task-add-milestone-btn" type="button">Add Milestone</button>
+          <button class="filter-btn task-delete-milestone-btn" type="button">Delete Last Milestone</button>
+        </div>
         <div class="timeline">
           <div class="timeline-item"><div class="field-stack"><div class="mini-label">Date</div><input class="inline-input timeline-date-input" value="04/02/2026"></div><div class="field-stack"><div class="mini-label">Stage</div><input class="inline-input milestone-stage-input" value="Sent to ABCS Management"></div><div class="field-stack"><div class="mini-label">Details</div><textarea class="inline-textarea timeline-textarea">Change legal structure, add Dr. Gin, change RSO, and add A Loper.</textarea></div><div><button class="danger-btn delete-milestone-btn" type="button">Delete</button></div></div>
           <div class="timeline-item"><div class="field-stack"><div class="mini-label">Date</div><input class="inline-input timeline-date-input" value="04/09/2026"></div><div class="field-stack"><div class="mini-label">Stage</div><input class="inline-input milestone-stage-input" value="From OO Legal with signatures"></div><div class="field-stack"><div class="mini-label">Details</div><textarea class="inline-textarea timeline-textarea">Returned with signatures.</textarea></div><div><button class="danger-btn delete-milestone-btn" type="button">Delete</button></div></div>
@@ -177,6 +181,10 @@
             </div>
           </div>
           <div class="contact-box" contenteditable="true"><strong>Contact</strong><br>Candice Hays<br>520-734-9602</div>
+        </div>
+        <div class="control-row" style="padding:0 22px 12px;">
+          <button class="filter-btn task-add-milestone-btn" type="button">Add Milestone</button>
+          <button class="filter-btn task-delete-milestone-btn" type="button">Delete Last Milestone</button>
         </div>
         <div class="timeline">
           <div class="timeline-item"><div class="field-stack"><div class="mini-label">Date</div><input class="inline-input timeline-date-input" value="04/07/2026"></div><div class="field-stack"><div class="mini-label">Stage</div><input class="inline-input milestone-stage-input" value="Initial visit to Propark"></div><div class="field-stack"><div class="mini-label">Details</div><textarea class="inline-textarea timeline-textarea">Initial visit stage identified.</textarea></div><div><button class="danger-btn delete-milestone-btn" type="button">Delete</button></div></div>
@@ -198,6 +206,10 @@
           </div>
           <div class="contact-box" contenteditable="true"><strong>Contact</strong><br>Scott Walker@Varian</div>
         </div>
+        <div class="control-row" style="padding:0 22px 12px;">
+          <button class="filter-btn task-add-milestone-btn" type="button">Add Milestone</button>
+          <button class="filter-btn task-delete-milestone-btn" type="button">Delete Last Milestone</button>
+        </div>
         <div class="timeline">
           <div class="timeline-item"><div class="field-stack"><div class="mini-label">Date</div><input class="inline-input timeline-date-input" value="04/03/2026"></div><div class="field-stack"><div class="mini-label">Stage</div><input class="inline-input milestone-stage-input" value="MS Meeting"></div><div class="field-stack"><div class="mini-label">Details</div><textarea class="inline-textarea timeline-textarea">Meeting with Bryce Logeman@Varian, Scott Walker, Diane Conrad, Ashley Benincasa@OO, and Nicole Simko@OO.</textarea></div><div><button class="danger-btn delete-milestone-btn" type="button">Delete</button></div></div>
           <div class="timeline-item"><div class="field-stack"><div class="mini-label">Date</div><input class="inline-input timeline-date-input" value="04/20/2026"></div><div class="field-stack"><div class="mini-label">Stage</div><input class="inline-input milestone-stage-input" value="Accepted by Varian"></div><div class="field-stack"><div class="mini-label">Details</div><textarea class="inline-textarea timeline-textarea">Proposal for service contract accepted by Varian.</textarea></div><div><button class="danger-btn delete-milestone-btn" type="button">Delete</button></div></div>
@@ -217,6 +229,10 @@
             </div>
           </div>
           <div class="contact-box" contenteditable="true"><strong>Contacts</strong><br>David Barchas — 602-343-6440<br>David Davenport<br>Abdoul — 520-437-4214</div>
+        </div>
+        <div class="control-row" style="padding:0 22px 12px;">
+          <button class="filter-btn task-add-milestone-btn" type="button">Add Milestone</button>
+          <button class="filter-btn task-delete-milestone-btn" type="button">Delete Last Milestone</button>
         </div>
         <div class="timeline">
           <div class="timeline-item"><div class="field-stack"><div class="mini-label">Date</div><input class="inline-input timeline-date-input" value="04/15/2026"></div><div class="field-stack"><div class="mini-label">Stage</div><input class="inline-input milestone-stage-input" value="Internal consensus"></div><div class="field-stack"><div class="mini-label">Details</div><textarea class="inline-textarea timeline-textarea">Consensus obtained from Ev and Dr. Orton on Plan C, using Iron Med hosting and Varian for machine service.</textarea></div><div><button class="danger-btn delete-milestone-btn" type="button">Delete</button></div></div>
@@ -284,7 +300,11 @@ function addTask(){
     </div>
     <div contenteditable="true">Contact</div>
   </div>
-  <div class="timeline"></div>`;
+  <div class="control-row" style="padding:0 22px 12px;">
+          <button class="filter-btn task-add-milestone-btn" type="button">Add Milestone</button>
+          <button class="filter-btn task-delete-milestone-btn" type="button">Delete Last Milestone</button>
+        </div>
+        <div class="timeline"></div>`;
   c.querySelector('.timeline').appendChild(makeMilestone());
   taskGrid.appendChild(c);
   updateView();
@@ -305,17 +325,33 @@ function deleteMilestone(){
   if(items.length) items[items.length-1].remove();
 }
 
-// bind buttons safely
+// bind global buttons safely
 const map={addTaskBtn:addTask,deleteTaskBtn:deleteTask,addMilestoneBtn:addMilestone,deleteMilestoneBtn:deleteMilestone};
 Object.keys(map).forEach(id=>{
   const el=document.getElementById(id);
   if(el) el.addEventListener('click', map[id]);
 });
 
-// delegation delete milestone
+// delegation for per-task milestone buttons and row deletes
 window.addEventListener('click', e=>{
   if(e.target.classList.contains('del-ms')){
-    e.target.closest('.timeline-item').remove();
+    const item = e.target.closest('.timeline-item');
+    if(item) item.remove();
+    return;
+  }
+
+  if(e.target.classList.contains('task-add-milestone-btn')){
+    const card = e.target.closest('.task-card');
+    const timeline = card ? card.querySelector('.timeline') : null;
+    if(timeline) timeline.appendChild(makeMilestone());
+    return;
+  }
+
+  if(e.target.classList.contains('task-delete-milestone-btn')){
+    const card = e.target.closest('.task-card');
+    const items = card ? card.querySelectorAll('.timeline-item') : [];
+    if(items.length) items[items.length-1].remove();
+    return;
   }
 });
 
