@@ -470,7 +470,8 @@ function exportCsv(){
   getCards().forEach(card => {
     const title = card.querySelector('.task-title') ? card.querySelector('.task-title').textContent.trim() : '';
     const subtitle = card.querySelector('.task-subtitle') ? card.querySelector('.task-subtitle').textContent.trim() : '';
-    const contact = card.querySelector('.contact-box') ? card.querySelector('.contact-box').innerText.split('\n').join(' ').trim() : '';
+    const contact = card.querySelector('.contact-box') ? card.querySelector('.contact-box').innerText.split('
+').join(' ').trim() : '';
     const ownerSelect = card.querySelector('.owner-select');
     const owners = ownerSelect ? selectedOptions(ownerSelect).join('|') : '';
     const status = card.querySelector('.status-select') ? card.querySelector('.status-select').value : '';
@@ -496,7 +497,8 @@ function exportCsv(){
     }
   });
 
-  const csv = rows.map(r => r.map(csvEscape).join(',')).join('\r\n');
+  const csv = rows.map(r => r.map(csvEscape).join(',')).join('
+');
   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
