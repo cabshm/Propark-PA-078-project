@@ -468,15 +468,16 @@ function csvEscape(value){
 function exportCsv(){
   const rows = [['task','subtitle','contact','owners','status','priority','milestone_date','milestone_stage','milestone_details']];
   getCards().forEach(card => {
-    const title = card.querySelector('.task-title')?.textContent?.trim() || '';
-    const subtitle = card.querySelector('.task-subtitle')?.textContent?.trim() || '';
-    const contact = card.querySelector('.contact-box')?.innerText?.replace(/
-+/g, ' ').trim() || '';
-    const owners = selectedOptions(card.querySelector('.owner-select')).join('|');
-    const status = card.querySelector('.status-select')?.value || '';
-    const priority = card.querySelector('.priority-select')?.value || '';
+    const title = card.querySelector('.task-title') ? card.querySelector('.task-title').textContent.trim() : '';
+    const subtitle = card.querySelector('.task-subtitle') ? card.querySelector('.task-subtitle').textContent.trim() : '';
+    const contact = card.querySelector('.contact-box') ? card.querySelector('.contact-box').innerText.split('\n').join(' ').trim() : '';
+    const ownerSelect = card.querySelector('.owner-select');
+    const owners = ownerSelect ? selectedOptions(ownerSelect).join('|') : '';
+    const status = card.querySelector('.status-select') ? card.querySelector('.status-select').value : '';
+    const priority = card.querySelector('.priority-select') ? card.querySelector('.priority-select').value : '';
     const milestones = Array.from(card.querySelectorAll('.timeline-item'));
-    if (milestones.length === 0) {
+
+    if (!milestones.length) {
       rows.push([title, subtitle, contact, owners, status, priority, '', '', '']);
     } else {
       milestones.forEach(item => {
@@ -487,22 +488,26 @@ function exportCsv(){
           owners,
           status,
           priority,
-          item.querySelector('.timeline-date-input')?.value || '',
-          item.querySelector('.milestone-stage-input')?.value || '',
-          item.querySelector('.timeline-textarea')?.value || ''
+          item.querySelector('.timeline-date-input') ? item.querySelector('.timeline-date-input').value : '',
+          item.querySelector('.milestone-stage-input') ? item.querySelector('.milestone-stage-input').value : '',
+          item.querySelector('.timeline-textarea') ? item.querySelector('.timeline-textarea').value : ''
         ]);
       });
     }
   });
-  const csv = rows.map(r => r.map(csvEscape).join(',')).join('
-');
-  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+
+  const csv = rows.map(r => r.map(csvEscape).join(',')).join('\r\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
   a.download = 'abcs_propark_tasks.csv';
+  document.body.appendChild(a);
   a.click();
-  URL.revokeObjectURL(url);
+  setTimeout(() => {
+    URL.revokeObjectURL(url);
+    a.remove();
+  }, 1000);
 }
 
 function parseCsvLine(line){
