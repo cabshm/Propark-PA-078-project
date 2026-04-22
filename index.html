@@ -106,9 +106,12 @@
         <button class="filter-btn" id="deleteTaskBtn" type="button">Delete First Visible Task</button>
         <button class="filter-btn" id="addMilestoneBtn" type="button">Add Milestone to First Visible Task</button>
         <button class="filter-btn" id="deleteMilestoneBtn" type="button">Delete Last Milestone from First Visible Task</button>
+        <button class="filter-btn" id="importCsvBtn" type="button">Import CSV</button>
+        <button class="filter-btn" id="exportCsvBtn" type="button">Export CSV</button>
         <button class="filter-btn" id="saveBtn" type="button">Save in Browser</button>
         <button class="filter-btn" id="exportBtn" type="button">Export HTML</button>
         <button class="filter-btn" id="toggleEditBtn" type="button">Toggle Edit Mode</button>
+        <input id="csvFileInput" type="file" accept=".csv,text/csv" style="display:none;" />
       </div>
       <div style="padding:0 20px 16px; color:var(--muted); line-height:1.5;">
         Changes now auto-save in your browser on this device. Use <b>Export HTML</b> if you want to keep a portable copy, or commit a new file to GitHub if you want coworkers to see the updated version.
@@ -250,6 +253,12 @@ const STORAGE_KEY = 'abcs_propark_dashboard_state_v1';
 const searchInput = document.getElementById('searchInput');
 const filterButtons = document.querySelectorAll('.filter-btn[data-filter]');
 const taskGrid = document.getElementById('taskGrid');
+const importCsvBtn = document.getElementById('importCsvBtn');
+const exportCsvBtn = document.getElementById('exportCsvBtn');
+const csvFileInput = document.getElementById('csvFileInput');
+const saveBtn = document.getElementById('saveBtn');
+const exportBtn = document.getElementById('exportBtn');
+const toggleEditBtn = document.getElementById('toggleEditBtn');
 
 let activeFilter = 'all';
 
@@ -416,6 +425,9 @@ function saveState(){
   } catch (e) {
     console.warn('Could not save state', e);
   }
+} catch (e) {
+    console.warn('Could not save state', e);
+  }
 }
 
 function clearInitialTasks(){
@@ -444,11 +456,173 @@ function restoreState(){
   }
 }
 
+function csvEscape(value){
+  const s = String(value ?? '');
+  if (s.includes('"') || s.includes(',') || s.includes('
+')) {
+    return '"' + s.replace(/"/g, '""') + '"';
+  }
+  return s;
+}
+
+function exportCsv(){
+  const rows = [['task','subtitle','contact','owners','status','priority','milestone_date','milestone_stage','milestone_details']];
+  getCards().forEach(card => {
+    const title = card.querySelector('.task-title')?.textContent?.trim() || '';
+    const subtitle = card.querySelector('.task-subtitle')?.textContent?.trim() || '';
+    const contact = card.querySelector('.contact-box')?.innerText?.replace(/
++/g, ' ').trim() || '';
+    const owners = selectedOptions(card.querySelector('.owner-select')).join('|');
+    const status = card.querySelector('.status-select')?.value || '';
+    const priority = card.querySelector('.priority-select')?.value || '';
+    const milestones = Array.from(card.querySelectorAll('.timeline-item'));
+    if (milestones.length === 0) {
+      rows.push([title, subtitle, contact, owners, status, priority, '', '', '']);
+    } else {
+      milestones.forEach(item => {
+        rows.push([
+          title,
+          subtitle,
+          contact,
+          owners,
+          status,
+          priority,
+          item.querySelector('.timeline-date-input')?.value || '',
+          item.querySelector('.milestone-stage-input')?.value || '',
+          item.querySelector('.timeline-textarea')?.value || ''
+        ]);
+      });
+    }
+  });
+  const csv = rows.map(r => r.map(csvEscape).join(',')).join('
+');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'abcs_propark_tasks.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function parseCsvLine(line){
+  const result = [];
+  let cur = '';
+  let inQuotes = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (inQuotes) {
+      if (ch === '"') {
+        if (line[i + 1] === '"') {
+          cur += '"';
+          i++;
+        } else {
+          inQuotes = false;
+        }
+      } else {
+        cur += ch;
+      }
+    } else {
+      if (ch === '"') {
+        inQuotes = true;
+      } else if (ch === ',') {
+        result.push(cur);
+        cur = '';
+      } else {
+        cur += ch;
+      }
+    }
+  }
+  result.push(cur);
+  return result;
+}
+
+function importCsvText(text){
+  const lines = text.replace(/
+/g, '').split('
+').filter(line => line.trim() !== '');
+  if (lines.length < 2) return;
+  const headers = parseCsvLine(lines[0]).map(h => h.trim().toLowerCase());
+  const idx = name => headers.indexOf(name);
+  const grouped = {};
+
+  for (let i = 1; i < lines.length; i++) {
+    const cols = parseCsvLine(lines[i]);
+    const task = cols[idx('task')] || 'Untitled Task';
+    if (!grouped[task]) {
+      grouped[task] = {
+        title: task,
+        subtitle: cols[idx('subtitle')] || '',
+        contactHtml: (cols[idx('contact')] || '').replace(/
+/g, '<br>'),
+        owners: (cols[idx('owners')] || '').split('|').map(s => s.trim()).filter(Boolean),
+        status: cols[idx('status')] || 'In progress',
+        priority: cols[idx('priority')] || 'Medium',
+        milestones: []
+      };
+    }
+    grouped[task].milestones.push({
+      date: cols[idx('milestone_date')] || '',
+      stage: cols[idx('milestone_stage')] || '',
+      details: cols[idx('milestone_details')] || ''
+    });
+  }
+
+  clearInitialTasks();
+  Object.values(grouped).forEach(task => addTask(task));
+  saveState();
+  updateView();
+}
+
 const map={addTaskBtn:()=>{addTask(); saveState();},deleteTaskBtn:deleteTask,addMilestoneBtn:addMilestone,deleteMilestoneBtn:deleteMilestone};
 Object.keys(map).forEach(id=>{
   const el=document.getElementById(id);
   if(el) el.addEventListener('click', map[id]);
 });
+
+if (saveBtn) {
+  saveBtn.addEventListener('click', saveState);
+}
+
+if (exportBtn) {
+  exportBtn.addEventListener('click', () => {
+    const blob = new Blob([document.documentElement.outerHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'abcs_propark_task_dashboard.html';
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+}
+
+if (toggleEditBtn) {
+  toggleEditBtn.addEventListener('click', () => {
+    const currentlyDisabled = toggleEditBtn.dataset.editing === 'off';
+    const enable = currentlyDisabled;
+    document.querySelectorAll('input, textarea').forEach(el => el.readOnly = !enable);
+    document.querySelectorAll('select').forEach(el => el.disabled = !enable);
+    document.querySelectorAll('[contenteditable]').forEach(el => el.contentEditable = enable ? 'true' : 'false');
+    toggleEditBtn.dataset.editing = enable ? 'on' : 'off';
+    toggleEditBtn.textContent = enable ? 'Toggle Edit Mode' : 'Enable Editing';
+  });
+}
+
+if (exportCsvBtn) {
+  exportCsvBtn.addEventListener('click', exportCsv);
+}
+
+if (importCsvBtn && csvFileInput) {
+  importCsvBtn.addEventListener('click', () => csvFileInput.click());
+  csvFileInput.addEventListener('change', (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => importCsvText(String(reader.result || ''));
+    reader.readAsText(file);
+    csvFileInput.value = '';
+  });
+}
 
 window.addEventListener('click', e=>{
   if(e.target.classList.contains('del-ms')){
