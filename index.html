@@ -14,52 +14,51 @@
       --accent: #1d4ed8;
       --danger: #991b1b;
       --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --radius: 18px;
     }
+
     * { box-sizing: border-box; }
     body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: var(--bg); color: var(--text); }
     .container { max-width: 1400px; margin: 0 auto; padding: 24px; }
-    .hero, .panel, .task-card { background: var(--card); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); }
-    .hero { padding: 24px; margin-bottom: 20px; }
-    .hero h1 { margin: 0 0 8px; }
+    .hero, .panel, .task-card { background: var(--card); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); }
+    .hero { padding: 24px; margin-bottom: 22px; }
+    .hero h1 { margin: 0 0 8px; font-size: 2rem; }
     .hero p { margin: 0; color: var(--muted); }
-    .meta { display: grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap: 12px; margin-top: 18px; }
-    .meta-card { border: 1px solid var(--line); border-radius: 14px; padding: 14px; }
-    .meta-label { font-size: 12px; color: var(--muted); text-transform: uppercase; font-weight: 700; margin-bottom: 6px; }
-    .toolbar, .task-toolbar { display: flex; flex-wrap: wrap; gap: 10px; }
-    .toolbar { margin-bottom: 16px; }
-    .panel { padding: 16px; margin-bottom: 20px; }
-    .summary { display: grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap: 12px; margin-bottom: 20px; }
-    .summary-card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 16px; box-shadow: var(--shadow); }
-    .summary-card .label { font-size: 12px; text-transform: uppercase; color: var(--muted); font-weight: 700; margin-bottom: 8px; }
-    .summary-card .value { font-size: 28px; font-weight: 800; }
-    .btn, .btn-danger { border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 10px 14px; cursor: pointer; font-weight: 700; }
+    .meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-top: 18px; }
+    .meta-card, .summary-card { border: 1px solid var(--line); border-radius: 16px; padding: 16px; background: #fff; }
+    .meta-label, .summary-card .label, .mini-label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 700; margin-bottom: 8px; }
+    .meta-value { font-size: 1rem; font-weight: 700; line-height: 1.4; }
+    .toolbar, .task-toolbar, .badge-row { display: flex; flex-wrap: wrap; gap: 10px; }
+    .toolbar { margin-bottom: 18px; }
+    .panel { padding: 16px 18px; margin-bottom: 22px; }
+    .search { width: min(420px, 100%); padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); font: inherit; }
+    .btn, .btn-danger { border: 1px solid var(--line); background: #fff; color: var(--text); border-radius: 999px; padding: 10px 14px; cursor: pointer; font-weight: 700; }
     .btn:hover, .btn-danger:hover { background: #f8fbff; }
     .btn-danger { color: var(--danger); }
-    .search { width: min(420px, 100%); padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); }
-    .task-grid { display: grid; gap: 18px; }
+    .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 22px; }
+    .summary-card .value { font-size: 1.7rem; font-weight: 800; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 1050px; }
+    th, td { padding: 12px 10px; border-bottom: 1px solid var(--line); vertical-align: top; text-align: left; line-height: 1.45; }
+    th { background: #f8fbff; font-size: 0.84rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+    .task-grid { display: grid; gap: 20px; }
     .task-card { overflow: hidden; }
-    .task-header { padding: 18px 20px 14px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
-    .task-title { margin: 0; font-size: 22px; }
-    .task-subtitle { margin-top: 6px; color: var(--muted); }
-    .contact-box { min-width: 280px; color: var(--muted); line-height: 1.5; }
-    .badge-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
-    .task-toolbar { padding: 0 20px 12px; }
-    .timeline { padding: 0 20px 20px; display: grid; gap: 10px; }
-    .timeline-item { display: grid; grid-template-columns: 150px 190px 1fr auto; gap: 10px; border: 1px solid var(--line); border-radius: 14px; padding: 12px; background: #fbfdff; }
-    .field-label { font-size: 11px; color: var(--muted); text-transform: uppercase; font-weight: 700; margin-bottom: 4px; }
-    .stack { display: flex; flex-direction: column; }
-    .inline-input, .inline-select, .inline-textarea { width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); font: inherit; background: #fff; }
+    .task-header { padding: 20px 22px 16px; border-bottom: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 14px; justify-content: space-between; align-items: flex-start; }
+    .task-title { margin: 0; font-size: 1.3rem; }
+    .task-subtitle { margin-top: 6px; color: var(--muted); line-height: 1.45; }
+    .contact-box { text-align: right; min-width: 280px; color: var(--muted); line-height: 1.45; }
+    .task-toolbar { padding: 0 22px 12px; }
+    .timeline { padding: 0 22px 24px; display: grid; gap: 12px; }
+    .timeline-item { display: grid; grid-template-columns: 150px 180px 1fr auto; gap: 14px; padding: 14px; border: 1px solid var(--line); border-radius: 16px; background: #fbfdff; align-items: start; }
+    .field-stack { display: flex; flex-direction: column; gap: 4px; }
+    .inline-input, .inline-select, .inline-textarea { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); font-size: 0.96rem; background: #fff; font-family: inherit; }
     .inline-textarea { min-height: 72px; resize: vertical; }
     .hidden { display: none !important; }
-    .status-note { color: var(--muted); font-size: 14px; }
-    table { width: 100%; border-collapse: collapse; min-width: 1100px; }
-    th, td { text-align: left; vertical-align: top; padding: 12px 10px; border-bottom: 1px solid var(--line); }
-    th { font-size: 12px; text-transform: uppercase; color: var(--muted); background: #f8fbff; }
-    .table-wrap { overflow-x: auto; }
-    @media (max-width: 900px) {
-      .timeline-item { grid-template-columns: 1fr; }
-      .contact-box { min-width: unset; }
+    .status-note { color: var(--muted); line-height: 1.5; }
+    @media (max-width: 980px) {
       .task-header { flex-direction: column; }
+      .contact-box { text-align: left; min-width: unset; }
+      .timeline-item { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -67,48 +66,51 @@
   <div class="container">
     <section class="hero">
       <h1>ABCS-Propark Task Dashboard</h1>
-      <p>Editable single-file project tracker for GitHub Pages.</p>
+      <p>Shareable HTML tracker for project tasks, contacts, milestones, priorities, and progress updates.</p>
       <div class="meta">
         <div class="meta-card">
           <div class="meta-label">Project Name</div>
-          <div>ABCS-Propark</div>
+          <div class="meta-value">ABCS-Propark</div>
         </div>
         <div class="meta-card">
           <div class="meta-label">Location</div>
-          <div>5670 N. Professional Park Dr. Suite 120, Tucson, AZ 85704-7818</div>
+          <div class="meta-value">5670 N. Professional Park Dr. Suite 120, Tucson, AZ 85704-7818</div>
         </div>
       </div>
     </section>
 
     <section class="panel">
       <div class="toolbar">
-        <input id="searchInput" class="search" type="search" placeholder="Search tasks, contacts, notes..." />
-        <button id="filterAll" class="btn" type="button">All</button>
-        <button id="filterProgress" class="btn" type="button">In progress</button>
-        <button id="filterComplete" class="btn" type="button">Completed</button>
-        <button id="addTaskBtn" class="btn" type="button">Add Task</button>
-        <button id="saveBrowserBtn" class="btn" type="button">Save in Browser</button>
-        <button id="exportHtmlBtn" class="btn" type="button">Export HTML</button>
-        <button id="exportCsvBtn" class="btn" type="button">Export CSV</button>
-        <button id="importCsvBtn" class="btn" type="button">Import CSV</button>
-        <input id="csvFileInput" type="file" accept=".csv,text/csv" style="display:none;" />
+        <input id="searchInput" class="search" type="search" placeholder="Search tasks, owners, contacts, or details..." />
+        <button class="btn" id="filterAll" type="button">All</button>
+        <button class="btn" id="filterProgress" type="button">In progress</button>
+        <button class="btn" id="filterComplete" type="button">Completed</button>
+        <button class="btn" id="addTaskBtn" type="button">Add Task</button>
+        <button class="btn" id="deleteTaskBtn" type="button">Delete First Visible Task</button>
       </div>
-      <div id="statusMessage" class="status-note">Changes auto-save in this browser after every edit.</div>
+      <div class="status-note">Restored previous version with original task data and per-task milestone controls.</div>
     </section>
 
     <section class="summary">
-      <div class="summary-card"><div class="label">Total Tasks</div><div id="sumTotal" class="value">0</div></div>
-      <div class="summary-card"><div class="label">In Progress</div><div id="sumProgress" class="value">0</div></div>
-      <div class="summary-card"><div class="label">Completed</div><div id="sumComplete" class="value">0</div></div>
+      <div class="summary-card"><div class="label">Total Tasks</div><div class="value" id="sumTotal">4</div></div>
+      <div class="summary-card"><div class="label">In Progress</div><div class="value" id="sumProgress">4</div></div>
+      <div class="summary-card"><div class="label">Completed</div><div class="value" id="sumComplete">0</div></div>
+      <div class="summary-card"><div class="label">Primary Owner</div><div class="value" style="font-size:1.1rem;line-height:1.4;">Carlos A Caballero</div></div>
     </section>
 
     <section class="panel">
-      <div style="font-weight:800; margin-bottom:12px;">Summary Table</div>
+      <div style="font-weight:800; margin-bottom:12px;">Hybrid View — Summary Table</div>
       <div class="table-wrap">
         <table>
           <thead>
             <tr>
-              <th>Task</th><th>Owners</th><th>Status</th><th>Priority</th><th>Latest milestone</th><th>Latest date</th><th>Contact</th>
+              <th>Task</th>
+              <th>Owner(s)</th>
+              <th>Status</th>
+              <th>Latest Milestone</th>
+              <th>Latest Date</th>
+              <th>Contact</th>
+              <th>Priority</th>
             </tr>
           </thead>
           <tbody id="summaryTableBody"></tbody>
@@ -120,51 +122,38 @@
   </div>
 
   <script>
-    const STORAGE_KEY = 'abcs_propark_dashboard_state_v2';
     const OWNER_OPTIONS = ['Carlos A Caballero','Mariia Gavrylenko','Scott Walker','David Barchas','Candice Hays'];
     let activeFilter = 'all';
 
     const els = {
       searchInput: document.getElementById('searchInput'),
-      taskGrid: document.getElementById('taskGrid'),
-      summaryTableBody: document.getElementById('summaryTableBody'),
-      statusMessage: document.getElementById('statusMessage'),
-      saveBrowserBtn: document.getElementById('saveBrowserBtn'),
-      exportHtmlBtn: document.getElementById('exportHtmlBtn'),
-      exportCsvBtn: document.getElementById('exportCsvBtn'),
-      importCsvBtn: document.getElementById('importCsvBtn'),
-      csvFileInput: document.getElementById('csvFileInput'),
-      addTaskBtn: document.getElementById('addTaskBtn'),
       filterAll: document.getElementById('filterAll'),
       filterProgress: document.getElementById('filterProgress'),
       filterComplete: document.getElementById('filterComplete'),
+      addTaskBtn: document.getElementById('addTaskBtn'),
+      deleteTaskBtn: document.getElementById('deleteTaskBtn'),
+      taskGrid: document.getElementById('taskGrid'),
+      summaryTableBody: document.getElementById('summaryTableBody'),
       sumTotal: document.getElementById('sumTotal'),
       sumProgress: document.getElementById('sumProgress'),
       sumComplete: document.getElementById('sumComplete')
     };
 
-    function showStatus(msg) {
-      els.statusMessage.textContent = msg;
-      clearTimeout(showStatus._t);
-      showStatus._t = setTimeout(() => {
-        els.statusMessage.textContent = 'Changes auto-save in this browser after every edit.';
-      }, 2500);
+    function selectedValues(selectEl) {
+      return Array.from(selectEl.options).filter(o => o.selected).map(o => o.value).join('; ');
     }
 
-    function selectedOptions(selectEl) {
-      return Array.from(selectEl.options).filter(o => o.selected).map(o => o.value);
-    }
-
-    function makeOwnerSelect(values = ['Carlos A Caballero']) {
+    function makeOwnerSelect(selected = ['Carlos A Caballero']) {
       const select = document.createElement('select');
       select.className = 'inline-select owner-select';
       select.multiple = true;
       select.size = 3;
+      select.style.minWidth = '220px';
       OWNER_OPTIONS.forEach(name => {
         const opt = document.createElement('option');
         opt.value = name;
         opt.textContent = name;
-        opt.selected = values.includes(name);
+        if (selected.includes(name)) opt.selected = true;
         select.appendChild(opt);
       });
       return select;
@@ -173,11 +162,12 @@
     function makeStatusSelect(value = 'In progress') {
       const select = document.createElement('select');
       select.className = 'inline-select status-select';
+      select.style.maxWidth = '160px';
       ['In progress','Completed'].forEach(v => {
         const opt = document.createElement('option');
         opt.value = v;
         opt.textContent = v;
-        opt.selected = v === value;
+        if (v === value) opt.selected = true;
         select.appendChild(opt);
       });
       return select;
@@ -186,28 +176,36 @@
     function makePrioritySelect(value = 'Medium') {
       const select = document.createElement('select');
       select.className = 'inline-select priority-select';
+      select.style.maxWidth = '140px';
       ['Low','Medium','High'].forEach(v => {
         const opt = document.createElement('option');
         opt.value = v;
         opt.textContent = v;
-        opt.selected = v === value;
+        if (v === value) opt.selected = true;
         select.appendChild(opt);
       });
       return select;
     }
 
-    function makeMilestone(date = 'Date', stage = 'Stage', details = 'Details') {
+    function makeMilestone(date='New date', stage='Milestone', details='Add milestone details.') {
       const item = document.createElement('div');
       item.className = 'timeline-item';
       item.innerHTML = `
-        <div class="stack"><div class="field-label">Date</div><input class="inline-input timeline-date-input" /></div>
-        <div class="stack"><div class="field-label">Stage</div><input class="inline-input milestone-stage-input" /></div>
-        <div class="stack"><div class="field-label">Details</div><textarea class="inline-textarea timeline-textarea"></textarea></div>
-        <div style="align-self:end;"><button class="btn-danger delete-milestone-btn" type="button">Delete</button></div>
-      `;
-      item.querySelector('.timeline-date-input').value = date;
-      item.querySelector('.milestone-stage-input').value = stage;
-      item.querySelector('.timeline-textarea').value = details;
+        <div class="field-stack">
+          <div class="mini-label">Date</div>
+          <input class="inline-input timeline-date-input" value="${date}">
+        </div>
+        <div class="field-stack">
+          <div class="mini-label">Stage</div>
+          <input class="inline-input milestone-stage-input" value="${stage}">
+        </div>
+        <div class="field-stack">
+          <div class="mini-label">Details</div>
+          <textarea class="inline-textarea timeline-textarea">${details}</textarea>
+        </div>
+        <div>
+          <button class="btn-danger delete-milestone-btn" type="button">Delete</button>
+        </div>`;
       return item;
     }
 
@@ -216,7 +214,7 @@
       card.className = 'task-card';
       card.innerHTML = `
         <div class="task-header">
-          <div style="flex:1 1 600px;">
+          <div>
             <h2 class="task-title" contenteditable="true"></h2>
             <div class="task-subtitle" contenteditable="true"></div>
             <div class="badge-row owner-holder"></div>
@@ -224,148 +222,103 @@
           <div class="contact-box" contenteditable="true"></div>
         </div>
         <div class="task-toolbar">
-          <button class="btn add-milestone-btn" type="button">Add Milestone</button>
-          <button class="btn delete-last-milestone-btn" type="button">Delete Last Milestone</button>
+          <button class="btn task-add-milestone-btn" type="button">Add Milestone</button>
+          <button class="btn task-delete-milestone-btn" type="button">Delete Last Milestone</button>
           <button class="btn-danger delete-task-btn" type="button">Delete Task</button>
         </div>
-        <div class="timeline"></div>
-      `;
-      card.querySelector('.task-title').textContent = task.title || 'New Task';
-      card.querySelector('.task-subtitle').textContent = task.subtitle || 'Description';
-      card.querySelector('.contact-box').innerHTML = task.contactHtml || 'Contact';
+        <div class="timeline"></div>`;
+
+      card.querySelector('.task-title').textContent = task.title;
+      card.querySelector('.task-subtitle').textContent = task.subtitle;
+      card.querySelector('.contact-box').innerHTML = task.contactHtml;
       const holder = card.querySelector('.owner-holder');
-      holder.appendChild(makeOwnerSelect(task.owners || ['Carlos A Caballero']));
-      holder.appendChild(makeStatusSelect(task.status || 'In progress'));
-      holder.appendChild(makePrioritySelect(task.priority || 'Medium'));
+      holder.appendChild(makeOwnerSelect(task.owners));
+      holder.appendChild(makeStatusSelect(task.status));
+      holder.appendChild(makePrioritySelect(task.priority));
       const timeline = card.querySelector('.timeline');
-      (task.milestones && task.milestones.length ? task.milestones : [{date:'Date', stage:'Stage', details:'Details'}])
-        .forEach(m => timeline.appendChild(makeMilestone(m.date, m.stage, m.details)));
+      task.milestones.forEach(m => timeline.appendChild(makeMilestone(m.date, m.stage, m.details)));
       return card;
     }
 
-    function defaultData() {
-      return [
-        {
-          title: 'PA-078 License Amendment',
-          subtitle: 'Change legal structure and license details with State BRC workflow.',
-          contactHtml: '<strong>Contact</strong><br>State BRC, Brian Goretzki<br>602-390-8771',
-          owners: ['Carlos A Caballero','Mariia Gavrylenko'],
-          status: 'In progress',
-          priority: 'Medium',
-          milestones: [
-            { date: '04/02/2026', stage: 'Sent to ABCS Management', details: 'Change legal structure, add Dr. Gin, change RSO, and add A Loper.' },
-            { date: '04/09/2026', stage: 'From OO Legal with signatures', details: 'Returned with signatures.' },
-            { date: '04/13/2026', stage: 'Confirmation from State', details: 'Yes, confirmed via text message to Carlos by Brian G.' }
-          ]
-        },
-        {
-          title: 'Chiller and Compressor',
-          subtitle: 'Contract to service the linac chiller and compressor, including initial site visit.',
-          contactHtml: '<strong>Contact</strong><br>Candice Hays<br>520-734-9602',
-          owners: ['Carlos A Caballero','Candice Hays'],
-          status: 'In progress',
-          priority: 'Medium',
-          milestones: [
-            { date: '04/07/2026', stage: 'Initial visit to Propark', details: 'Initial visit stage identified.' },
-            { date: '04/16/2026', stage: 'Contract from Tolin Mechanical', details: 'Contract received and legal signature step completed.' },
-            { date: '04/21/2026', stage: 'Request first visit to Propark', details: 'Requested on 04/15, 04/16, and 04/21.' }
-          ]
-        }
-      ];
-    }
-
-    function renderTasks(tasks) {
-      els.taskGrid.innerHTML = '';
-      tasks.forEach(task => els.taskGrid.appendChild(createTaskCard(task)));
-      refreshAll();
-    }
-
-    function getCards() {
-      return Array.from(els.taskGrid.querySelectorAll('.task-card'));
-    }
-
-    function serializeState() {
-      return {
-        activeFilter,
-        search: els.searchInput.value || '',
-        tasks: getCards().map(card => ({
-          title: card.querySelector('.task-title').textContent.trim(),
-          subtitle: card.querySelector('.task-subtitle').textContent.trim(),
-          contactHtml: card.querySelector('.contact-box').innerHTML,
-          owners: selectedOptions(card.querySelector('.owner-select')),
-          status: card.querySelector('.status-select').value,
-          priority: card.querySelector('.priority-select').value,
-          milestones: Array.from(card.querySelectorAll('.timeline-item')).map(item => ({
-            date: item.querySelector('.timeline-date-input').value,
-            stage: item.querySelector('.milestone-stage-input').value,
-            details: item.querySelector('.timeline-textarea').value
-          }))
-        }))
-      };
-    }
-
-    function saveState(manual = false) {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(serializeState()));
-        if (manual) showStatus('Saved in browser.');
-      } catch (e) {
-        console.error(e);
-        showStatus('Save failed in this browser.');
+    const data = [
+      {
+        title: 'PA-078 License Amendment',
+        subtitle: 'Change legal structure and license details with State BRC workflow.',
+        contactHtml: '<strong>Contact</strong><br>State BRC, Brian Goretzki<br>602-390-8771',
+        owners: ['Carlos A Caballero','Mariia Gavrylenko'],
+        status: 'In progress',
+        priority: 'Medium',
+        milestones: [
+          { date: '04/02/2026', stage: 'Sent to ABCS Management', details: 'Change legal structure, add Dr. Gin, change RSO, and add A Loper.' },
+          { date: '04/09/2026', stage: 'From OO Legal with signatures', details: 'Returned with signatures.' },
+          { date: '04/13/2026', stage: 'Confirmation from State', details: 'Yes, confirmed via text message to Carlos by Brian G.' }
+        ]
+      },
+      {
+        title: 'Chiller and Compressor',
+        subtitle: 'Contract to service the linac chiller and compressor, including initial site visit.',
+        contactHtml: '<strong>Contact</strong><br>Candice Hays<br>520-734-9602',
+        owners: ['Carlos A Caballero','Candice Hays'],
+        status: 'In progress',
+        priority: 'Medium',
+        milestones: [
+          { date: '04/07/2026', stage: 'Initial visit to Propark', details: 'Initial visit stage identified.' },
+          { date: '04/16/2026', stage: 'Contract from Tolin Mechanical', details: 'Contract received and legal signature step completed.' },
+          { date: '04/21/2026', stage: 'Request first visit to Propark', details: 'Requested on 04/15, 04/16, and 04/21.' }
+        ]
+      },
+      {
+        title: 'PA-078 Linac Service Agreement from Varian',
+        subtitle: 'Service contract coordination and discussions with Varian and OO Legal.',
+        contactHtml: '<strong>Contact</strong><br>Scott Walker@Varian',
+        owners: ['Carlos A Caballero','Scott Walker'],
+        status: 'In progress',
+        priority: 'High',
+        milestones: [
+          { date: '04/03/2026', stage: 'MS Meeting', details: 'Meeting with Bryce Logeman@Varian, Scott Walker, Diane Conrad, Ashley Benincasa@OO, and Nicole Simko@OO.' },
+          { date: '04/20/2026', stage: 'Accepted by Varian', details: 'Proposal for service contract accepted by Varian.' },
+          { date: '04/21/2026', stage: 'Sent to OO Legal', details: 'Service agreement sent to OO Legal.' }
+        ]
+      },
+      {
+        title: 'ARIA/Eclipse Hosting at Iron Med',
+        subtitle: 'Hosting and service transition planning involving Iron Med, Varian, and UUG.',
+        contactHtml: '<strong>Contacts</strong><br>David Barchas — 602-343-6440<br>David Davenport<br>Abdoul — 520-437-4214',
+        owners: ['Carlos A Caballero','David Barchas'],
+        status: 'In progress',
+        priority: 'Medium',
+        milestones: [
+          { date: '04/15/2026', stage: 'Internal consensus', details: 'Consensus obtained from Ev and Dr. Orton on Plan C, using Iron Med hosting and Varian for machine service.' },
+          { date: '04/20/2026', stage: 'Callback from CTO', details: 'David Barchas called back and emailed ABCS requesting UUG action to transfer billing and service.' },
+          { date: '04/20/2026', stage: 'Service agreement from Iron Medical', details: 'Transfer of billing and service still appears pending.' }
+        ]
       }
-    }
+    ];
 
-    function restoreState() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) {
-          renderTasks(defaultData());
-          return;
-        }
-        const state = JSON.parse(raw);
-        activeFilter = state.activeFilter || 'all';
-        els.searchInput.value = state.search || '';
-        renderTasks(state.tasks || defaultData());
-      } catch (e) {
-        console.error(e);
-        renderTasks(defaultData());
-      }
-    }
+    function getCards() { return Array.from(document.querySelectorAll('.task-card')); }
 
-    function applyFilterButtons() {
-      [els.filterAll, els.filterProgress, els.filterComplete].forEach(btn => btn.style.background = '#fff');
-      if (activeFilter === 'all') els.filterAll.style.background = '#dbeafe';
-      if (activeFilter === 'progress') els.filterProgress.style.background = '#dbeafe';
-      if (activeFilter === 'complete') els.filterComplete.style.background = '#dbeafe';
-    }
-
-    function refreshSummaryTable() {
-      const cards = getCards();
-      els.summaryTableBody.innerHTML = '';
-      cards.forEach(card => {
-        const tr = document.createElement('tr');
-        const latest = card.querySelector('.timeline-item:last-child');
-        const td = vals => vals.map(v => `<td>${v}</td>`).join('');
-        tr.innerHTML = td([
-          card.querySelector('.task-title').textContent.trim(),
-          selectedOptions(card.querySelector('.owner-select')).join('; '),
-          card.querySelector('.status-select').value,
-          card.querySelector('.priority-select').value,
-          latest ? latest.querySelector('.milestone-stage-input').value : '',
-          latest ? latest.querySelector('.timeline-date-input').value : '',
-          card.querySelector('.contact-box').innerText.replace(/
-+/g, ' ').trim()
-        ]);
-        els.summaryTableBody.appendChild(tr);
-      });
-    }
-
-    function refreshCounts() {
+    function refreshSummary() {
       const cards = getCards();
       const total = cards.length;
-      const complete = cards.filter(c => c.querySelector('.status-select').value === 'Completed').length;
+      const completed = cards.filter(c => c.querySelector('.status-select').value === 'Completed').length;
       els.sumTotal.textContent = String(total);
-      els.sumComplete.textContent = String(complete);
-      els.sumProgress.textContent = String(total - complete);
+      els.sumProgress.textContent = String(total - completed);
+      els.sumComplete.textContent = String(completed);
+
+      els.summaryTableBody.innerHTML = '';
+      cards.forEach(card => {
+        const latest = card.querySelector('.timeline .timeline-item:last-child');
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${card.querySelector('.task-title').textContent.trim()}</td>
+          <td>${selectedValues(card.querySelector('.owner-select'))}</td>
+          <td>${card.querySelector('.status-select').value}</td>
+          <td>${latest ? latest.querySelector('.milestone-stage-input').value : ''}</td>
+          <td>${latest ? latest.querySelector('.timeline-date-input').value : ''}</td>
+          <td>${card.querySelector('.contact-box').innerText.replace(/\n+/g, ' ').trim()}</td>
+          <td>${card.querySelector('.priority-select').value}</td>`;
+        els.summaryTableBody.appendChild(tr);
+      });
     }
 
     function refreshVisibility() {
@@ -379,198 +332,76 @@
     }
 
     function refreshAll() {
-      applyFilterButtons();
-      refreshCounts();
-      refreshSummaryTable();
+      refreshSummary();
       refreshVisibility();
+      [els.filterAll, els.filterProgress, els.filterComplete].forEach(btn => btn.style.background = '#fff');
+      if (activeFilter === 'all') els.filterAll.style.background = '#dbeafe';
+      if (activeFilter === 'progress') els.filterProgress.style.background = '#dbeafe';
+      if (activeFilter === 'complete') els.filterComplete.style.background = '#dbeafe';
     }
 
-    function csvEscape(v) {
-      const s = String(v ?? '');
-      return /[",
-]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
-    }
+    data.forEach(task => els.taskGrid.appendChild(createTaskCard(task)));
 
-    function exportCsv() {
-      const rows = [['task','subtitle','contact','owners','status','priority','milestone_date','milestone_stage','milestone_details']];
-      getCards().forEach(card => {
-        const base = [
-          card.querySelector('.task-title').textContent.trim(),
-          card.querySelector('.task-subtitle').textContent.trim(),
-          card.querySelector('.contact-box').innerText.replace(/
-+/g, ' ').trim(),
-          selectedOptions(card.querySelector('.owner-select')).join('|'),
-          card.querySelector('.status-select').value,
-          card.querySelector('.priority-select').value
-        ];
-        const milestones = Array.from(card.querySelectorAll('.timeline-item'));
-        if (!milestones.length) rows.push([...base, '', '', '']);
-        milestones.forEach(item => {
-          rows.push([
-            ...base,
-            item.querySelector('.timeline-date-input').value,
-            item.querySelector('.milestone-stage-input').value,
-            item.querySelector('.timeline-textarea').value
-          ]);
-        });
-      });
-      const csv = rows.map(r => r.map(csvEscape).join(',')).join('
-');
-      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'abcs_propark_tasks.csv';
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1000);
-      showStatus('CSV exported.');
-    }
-
-    function parseCsv(text) {
-      const rows = [];
-      let row = [];
-      let cell = '';
-      let inQuotes = false;
-      for (let i = 0; i < text.length; i++) {
-        const ch = text[i];
-        const next = text[i + 1];
-        if (inQuotes) {
-          if (ch === '"' && next === '"') { cell += '"'; i++; }
-          else if (ch === '"') inQuotes = false;
-          else cell += ch;
-        } else {
-          if (ch === '"') inQuotes = true;
-          else if (ch === ',') { row.push(cell); cell = ''; }
-          else if (ch === '
-') { row.push(cell); rows.push(row); row = []; cell = ''; }
-          else if (ch !== '
-') cell += ch;
-        }
-      }
-      row.push(cell);
-      rows.push(row);
-      return rows.filter(r => r.some(c => String(c).trim() !== ''));
-    }
-
-    function importCsvText(text) {
-      const rows = parseCsv(text);
-      if (rows.length < 2) {
-        showStatus('CSV appears empty.');
-        return;
-      }
-      const headers = rows[0].map(h => h.trim().toLowerCase());
-      const i = name => headers.indexOf(name);
-      const grouped = new Map();
-      rows.slice(1).forEach(cols => {
-        const title = cols[i('task')] || 'Untitled Task';
-        if (!grouped.has(title)) {
-          grouped.set(title, {
-            title,
-            subtitle: cols[i('subtitle')] || '',
-            contactHtml: (cols[i('contact')] || '').replace(/
-/g, '<br>'),
-            owners: (cols[i('owners')] || '').split('|').map(s => s.trim()).filter(Boolean),
-            status: cols[i('status')] || 'In progress',
-            priority: cols[i('priority')] || 'Medium',
-            milestones: []
-          });
-        }
-        grouped.get(title).milestones.push({
-          date: cols[i('milestone_date')] || '',
-          stage: cols[i('milestone_stage')] || '',
-          details: cols[i('milestone_details')] || ''
-        });
-      });
-      renderTasks(Array.from(grouped.values()));
-      saveState(true);
-      showStatus('CSV imported.');
-    }
-
-    function exportHtml() {
-      saveState(false);
-      const html = '<!DOCTYPE html>
-' + document.documentElement.outerHTML;
-      const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'abcs_propark_task_dashboard.html';
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1000);
-      showStatus('HTML exported.');
-    }
+    els.searchInput.addEventListener('input', refreshAll);
+    els.filterAll.addEventListener('click', () => { activeFilter = 'all'; refreshAll(); });
+    els.filterProgress.addEventListener('click', () => { activeFilter = 'progress'; refreshAll(); });
+    els.filterComplete.addEventListener('click', () => { activeFilter = 'complete'; refreshAll(); });
 
     els.addTaskBtn.addEventListener('click', () => {
-      els.taskGrid.appendChild(createTaskCard({}));
+      els.taskGrid.appendChild(createTaskCard({
+        title: 'New Task',
+        subtitle: 'Describe this task here.',
+        contactHtml: '<strong>Contact</strong><br>Contact Name<br>Phone or email',
+        owners: ['Carlos A Caballero'],
+        status: 'In progress',
+        priority: 'Medium',
+        milestones: [{ date: 'New date', stage: 'Milestone', details: 'Add milestone details.' }]
+      }));
       refreshAll();
-      saveState();
-      showStatus('Task added.');
-    });
-    els.saveBrowserBtn.addEventListener('click', () => saveState(true));
-    els.exportCsvBtn.addEventListener('click', exportCsv);
-    els.exportHtmlBtn.addEventListener('click', exportHtml);
-    els.importCsvBtn.addEventListener('click', () => els.csvFileInput.click());
-    els.csvFileInput.addEventListener('change', e => {
-      const file = e.target.files && e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = () => importCsvText(String(reader.result || ''));
-      reader.readAsText(file);
-      e.target.value = '';
     });
 
-    els.filterAll.addEventListener('click', () => { activeFilter = 'all'; refreshAll(); saveState(); });
-    els.filterProgress.addEventListener('click', () => { activeFilter = 'progress'; refreshAll(); saveState(); });
-    els.filterComplete.addEventListener('click', () => { activeFilter = 'complete'; refreshAll(); saveState(); });
-    els.searchInput.addEventListener('input', () => { refreshVisibility(); saveState(); });
+    els.deleteTaskBtn.addEventListener('click', () => {
+      const firstVisible = getCards().find(card => !card.classList.contains('hidden'));
+      if (firstVisible) firstVisible.remove();
+      refreshAll();
+    });
 
     document.addEventListener('click', e => {
       const card = e.target.closest('.task-card');
       if (!card) return;
-      if (e.target.classList.contains('add-milestone-btn')) {
+
+      if (e.target.classList.contains('task-add-milestone-btn')) {
         card.querySelector('.timeline').appendChild(makeMilestone());
         refreshAll();
-        saveState();
-        showStatus('Milestone added.');
       }
-      if (e.target.classList.contains('delete-last-milestone-btn')) {
+
+      if (e.target.classList.contains('task-delete-milestone-btn')) {
         const items = card.querySelectorAll('.timeline-item');
         if (items.length) items[items.length - 1].remove();
         refreshAll();
-        saveState();
-        showStatus('Last milestone removed.');
       }
+
       if (e.target.classList.contains('delete-task-btn')) {
         card.remove();
         refreshAll();
-        saveState();
-        showStatus('Task removed.');
       }
+
       if (e.target.classList.contains('delete-milestone-btn')) {
         const item = e.target.closest('.timeline-item');
         if (item) item.remove();
         refreshAll();
-        saveState();
-        showStatus('Milestone removed.');
       }
     });
 
     document.addEventListener('input', e => {
-      if (e.target.closest('.task-card')) {
-        refreshAll();
-        saveState();
-      }
-    });
-    document.addEventListener('change', e => {
-      if (e.target.closest('.task-card')) {
-        refreshAll();
-        saveState();
-      }
+      if (e.target.closest('.task-card')) refreshAll();
     });
 
-    restoreState();
+    document.addEventListener('change', e => {
+      if (e.target.closest('.task-card')) refreshAll();
+    });
+
+    refreshAll();
   </script>
 </body>
 </html>
